@@ -4,20 +4,3 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-requests	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import requests$/;"	namespace	line:3
-time	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import time, threading$/;"	namespace	line:4
-threading	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import time, threading$/;"	namespace	line:4
-datetime	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import datetime$/;"	namespace	line:5
-logging	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import logging$/;"	namespace	line:6
-logger	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import logger$/;"	namespace	line:7
-re	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import re$/;"	namespace	line:8
-os	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import os$/;"	namespace	line:9
-log	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^log = logger.initializeLogger()$/;"	variable	line:11
-database_ip	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^database_ip = "invalid"$/;"	variable	line:12
-databaseInit	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^def databaseInit():$/;"	function	line:15
-getIP	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^def getIP(address):$/;"	function	line:33
-periodicFunction	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^def periodicFunction(seconds, func, f_args):$/;"	function	line:48
-databaseReturn	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^databaseReturn = databaseInit()$/;"	variable	line:56
-database_ip	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^database_ip = databaseReturn[1]$/;"	variable	line:57
-file	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^file = databaseReturn[0]$/;"	variable	line:58
-pattern	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^pattern = re.compile("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$")$/;"	variable	line:62
