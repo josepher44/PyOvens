@@ -43,7 +43,8 @@ def getIP(address):
         database_ip = current_ip
         print("Wrote new IP to database")
 
-
+def postRequest(address):
+    payload = {'Host', 'domains.google.com', 'Authorization', }
 
 def periodicFunction(seconds, func, f_args):
     threading.Timer(seconds, periodicFunction, args=[seconds, func, f_args]).start()
