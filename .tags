@@ -1,0 +1,38 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+PyOvens	P:\scripts\PyOvens\README.md	/^# PyOvens$/;"	function	line:1
+IPDuringThunder	P:\scripts\PyOvens\README.md	/^# IPDuringThunder$/;"	function	line:4
+np	P:\scripts\PyOvens\dirtEH\dirtEH.py	/^import numpy as np$/;"	namespace	line:1
+os	P:\scripts\PyOvens\dirtEH\dirtEH.py	/^import os$/;"	namespace	line:2
+getPaths	P:\scripts\PyOvens\dirtEH\dirtEH.py	/^def getPaths(dir):$/;"	function	line:5
+workspacePath	P:\scripts\PyOvens\dirtEH\dirtEH.py	/^workspacePath = "C:\/Users\/Owner\/Documents\/Portfolio\/"$/;"	variable	line:11
+subdirectory	P:\scripts\PyOvens\dirtEH\dirtEH.py	/^subdirectory = "Media\/Collage Canidates\/"$/;"	variable	line:12
+files	P:\scripts\PyOvens\dirtEH\dirtEH.py	/^files = getPaths(workspacePath+subdirectory)$/;"	variable	line:14
+time	P:\scripts\PyOvens\dirtEH\timetest.py	/^import time, threading$/;"	namespace	line:1
+threading	P:\scripts\PyOvens\dirtEH\timetest.py	/^import time, threading$/;"	namespace	line:1
+foo	P:\scripts\PyOvens\dirtEH\timetest.py	/^def foo():$/;"	function	line:2
+requests	P:\scripts\PyOvens\ipDuringThunder\httpPostTest.py	/^import requests$/;"	namespace	line:1
+url	P:\scripts\PyOvens\ipDuringThunder\httpPostTest.py	/^url = 'https:\/\/api.ipify.org\/'$/;"	variable	line:3
+my_ip	P:\scripts\PyOvens\ipDuringThunder\httpPostTest.py	/^my_ip = requests.get(url, headers=headers).text$/;"	variable	line:4
+requests	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import requests$/;"	namespace	line:3
+time	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import time, threading$/;"	namespace	line:4
+threading	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import time, threading$/;"	namespace	line:4
+datetime	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import datetime$/;"	namespace	line:5
+logging	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import logging$/;"	namespace	line:6
+logger	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^import logger$/;"	namespace	line:7
+log	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^log = logger.initializeLogger()$/;"	variable	line:9
+getIP	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^def getIP(address):$/;"	function	line:11
+periodicFunction	P:\scripts\PyOvens\ipDuringThunder\ipDuringThunder.py	/^def periodicFunction(seconds, func, f_args):$/;"	function	line:15
+logging	P:\scripts\PyOvens\ipDuringThunder\logger.py	/^import logging.handlers$/;"	namespace	line:2
+handlers	P:\scripts\PyOvens\ipDuringThunder\logger.py	/^import logging.handlers$/;"	namespace	line:2
+initializeLogger	P:\scripts\PyOvens\ipDuringThunder\logger.py	/^def initializeLogger():$/;"	function	line:4
+Notify	P:\scripts\PyOvens\ipDuringThunder\notifytest.py	/^from notify_run import Notify$/;"	namespace	line:1
+notify	P:\scripts\PyOvens\ipDuringThunder\notifytest.py	/^notify = Notify()$/;"	variable	line:2
+time	P:\scripts\PyOvens\ipDuringThunder\periodicTest.py	/^import time, threading$/;"	namespace	line:1
+threading	P:\scripts\PyOvens\ipDuringThunder\periodicTest.py	/^import time, threading$/;"	namespace	line:1
+periodic	P:\scripts\PyOvens\ipDuringThunder\periodicTest.py	/^def periodic(seconds):$/;"	function	line:3
+periodicRaw	P:\scripts\PyOvens\ipDuringThunder\periodicTest.py	/^    def periodicRaw():$/;"	function	line:4	function:periodic
