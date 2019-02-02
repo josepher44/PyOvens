@@ -106,3 +106,10 @@ venv.bak/
 # atom tags
 *.tags
 *.tags1
+
+# images
+*.jpg
+*.gif
+*.png
+*.svg
+*.ico
