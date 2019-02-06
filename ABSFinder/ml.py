@@ -20,7 +20,7 @@ props ={
 'coef':None, #coef for Poly/Sigmoid defaults to 0
 'gamma':None, #kernel param for poly/rbf/sigma - default is 1/#samples
 }
-svm = SVMClassifier(extractors,props).load("SVMClass.xml")
+svm = SVMClassifier(extractors,props)
 tree = TreeClassifier(extractors)
 
 trainPaths = []
@@ -43,16 +43,16 @@ print testPaths
 print classes
 
 print "SVM ================================================================="
-#print svm.train(trainPaths,classes,verbose=True)
+print svm.train(trainPaths,classes,verbose=True)
 
 
 #print "TREE ================================================================="
-#print tree.train(trainPaths,classes,verbose=True)
+print tree.train(trainPaths,classes,verbose=True)
 
 #print "SVM test ================================================================="
 #print svm.test(testPaths,classes,verbose=True)
 
-cam = Camera()
+cam = Camera(1)
 disp = Display()
 n = 0
 className = "Waiting...."
@@ -64,7 +64,7 @@ while disp.isNotDone():
 		n = 0
 	else:
 		n +=1
-	img.drawText(className, 10, 10, fontsize=60, color=Color.RED)
+	img.drawText(className[6:], 10, 10, fontsize=40, color=Color.RED)
 	img.show()
 	if disp.mouseRight:
 		break
