@@ -72,14 +72,14 @@ imgSave = cam.getImage() #.drawText("No Image File Taken Yet",50,50,color=Color.
 
 # Start saving the new pictures
 while disp.isNotDone():
-	img = cam.getImage()
-	if disp.mouseLeft and disp.leftButtonDownPosition()[0] < 639:
+	img = cam.getImage().crop(200,200,200,200)
+	if disp.mouseLeft and disp.leftButtonDownPosition()[0] < 239:
 		n +=1
 		imgName = "img" + str(n) + ".png"
 		img.save(imgName)
 		imgSave = img
 		print "Saved as: " + imgName
-	if disp.mouseLeft and disp.leftButtonDownPosition()[0] > 639:
+	if disp.mouseLeft and disp.leftButtonDownPosition()[0] > 239:
 		imgName = "img" + str(n) + ".png"
 		img.save(imgName)
 		imgSave = img
@@ -87,7 +87,7 @@ while disp.isNotDone():
 	if disp.mouseRight:
 		break
 	img.save(disp)
-	img.sideBySide(img.edges(t1=100)).show()
+	img.show()
 
 # Original directory - originalwd = os.getcwd()
 

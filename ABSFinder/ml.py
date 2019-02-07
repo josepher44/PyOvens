@@ -7,10 +7,11 @@ path = os.getcwd() + "/pieces"
 
 
 hhfe = HueHistogramFeatureExtractor()
-#haarfe = HaarLikeFeatureExtractor()
+#haarfe = HaarLikeFeatureExtractor(fname='C:/Users/Owner/git/pyOvens/ABSFinder/SimpleCV/SimpleCV/Features/haar.txt')
 ehfe = EdgeHistogramFeatureExtractor()
+myfe = MorphologyFeatureExtractor()
 #lfe = LegoFeatureExtractor()
-extractors = [hhfe, ehfe]#, lfe]#	, haarfe]
+extractors = [hhfe, ehfe, myfe]#, lfe]#	, haarfe]
 props ={
 'KernelType':'Poly', #default is a RBF Kernel
 'SVMType':'C', #default is C
@@ -22,6 +23,8 @@ props ={
 }
 svm = SVMClassifier(extractors,props)
 tree = TreeClassifier(extractors)
+knn = KNNClassifier(extractors)
+bayes = NaiveBayesClassifier(extractors)
 
 trainPaths = []
 n = 1
@@ -49,22 +52,36 @@ print svm.train(trainPaths,classes,verbose=True)
 #print "TREE ================================================================="
 print tree.train(trainPaths,classes,verbose=True)
 
+print knn.train(trainPaths,classes,verbose=True)
+
+print bayes.train(trainPaths,classes,verbose=True)
+
 #print "SVM test ================================================================="
 #print svm.test(testPaths,classes,verbose=True)
 
 cam = Camera(1)
 disp = Display()
 n = 0
-className = "Waiting...."
+svmclassName = "Waiting...."
+knnclassName = "Waiting...."
+treeclassName = "Waiting...."
+bayesclassName = "Waiting...."
 
 while disp.isNotDone():
-	img = cam.getImage()
+	img = cam.getImage().crop(200,200,200,200)
 	if n > 4:
-		className = svm.classify(img)
+		svmclassName = svm.classify(img)
+		knnclassName = knn.classify(img)
+		treeclassName = tree.classify(img)
+		bayesclassName = bayes.classify(img)
 		n = 0
 	else:
 		n +=1
-	img.drawText(className[6:], 10, 10, fontsize=40, color=Color.RED)
+	img=img.scale(400, 400)
+	img.drawText(svmclassName[6:], 10, 10, fontsize=40, color=Color.RED)
+	img.drawText(knnclassName[6:], 10, 60, fontsize=40, color=Color.BLUE)
+	img.drawText(treeclassName[6:], 10, 110, fontsize=40, color=Color.BLACK)
+	img.drawText(bayesclassName[6:], 10, 160, fontsize=40, color=Color.ORANGE)
 	img.show()
 	if disp.mouseRight:
 		break
