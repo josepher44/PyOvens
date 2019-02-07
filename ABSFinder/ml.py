@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 from SimpleCV import *
 from SimpleCV.Features import FeatureExtractorBase
-import time, os, orange, orngSVM, string
+import time, os, orange, orngSVM, string, copy
 
 originalwd = os.getcwd()
 path = os.getcwd() + "/pieces"
@@ -45,16 +46,17 @@ print trainPaths
 print testPaths
 print classes
 
-print "SVM ================================================================="
+print "TRAINING ================================================================="
 print svm.train(trainPaths,classes,verbose=True)
-
-
-#print "TREE ================================================================="
 print tree.train(trainPaths,classes,verbose=True)
-
 print knn.train(trainPaths,classes,verbose=True)
-
 print bayes.train(trainPaths,classes,verbose=True)
+
+print "LOADING"
+#svm = SVMClassifier.load('SVMClass.xml')
+#tree = TreeClassifier.load('TreeClass.xml')
+#bayes = NaiveBayesClassifier.load('BayesClass.xml')
+#knn = KNNClassifier.load('KNNClass.xml')
 
 #print "SVM test ================================================================="
 #print svm.test(testPaths,classes,verbose=True)
@@ -62,10 +64,12 @@ print bayes.train(trainPaths,classes,verbose=True)
 cam = Camera(1)
 disp = Display()
 n = 0
+stable = 0
 svmclassName = "Waiting...."
 knnclassName = "Waiting...."
 treeclassName = "Waiting...."
 bayesclassName = "Waiting...."
+path = ""
 
 while disp.isNotDone():
 	img = cam.getImage().crop(200,200,200,200)
@@ -78,11 +82,81 @@ while disp.isNotDone():
 	else:
 		n +=1
 	img=img.scale(400, 400)
-	img.drawText(svmclassName[6:], 10, 10, fontsize=40, color=Color.RED)
-	img.drawText(knnclassName[6:], 10, 60, fontsize=40, color=Color.BLUE)
-	img.drawText(treeclassName[6:], 10, 110, fontsize=40, color=Color.BLACK)
-	img.drawText(bayesclassName[6:], 10, 160, fontsize=40, color=Color.ORANGE)
-	img.show()
+	imgraw = copy.deepcopy(img)
+
+	newlayer = DrawingLayer(img.size())
+
+	newlayer.setFontSize(40)
+	newlayer.text(svmclassName[6:], (10, 10), color=Color.RED)
+	newlayer.text(knnclassName[6:], (10, 60), color=Color.BLUE)
+	newlayer.text(treeclassName[6:], (10, 110), color=Color.BLACK)
+	newlayer.text(bayesclassName[6:], (10, 160), color=Color.ORANGE)
+
+	img.addDrawingLayer(newlayer)
+
+	#Save additional images if their is four way, stable agreement on the class
+	if svmclassName == knnclassName and treeclassName == bayesclassName and treeclassName == knnclassName:
+		stable +=1
+	else:
+		stable=0
+	if stable > 50:
+		path = os.getcwd() + "/pieces" + svmclassName[6:]
+		os.chdir(path)
+		pathList = os.listdir(path)
+		n = 0
+		for string in pathList:
+			string = string.lstrip("img").rstrip(".png")
+			pathList[n] = int(string)
+			n +=1
+		n =max(pathList)
+		n +=1
+		imgName = "img" + str(n) + ".png"
+		imgraw.save(imgName)
+		imgSave = img
+		print "Saved as: " + imgName
+		print("recorded image of "+svmclassName[6:])
+		stable=0
+		os.chdir("..")
+		os.chdir("..")
+	#img.show()
+	disp.writeFrame(img.applyLayers())
+
+	partname=""
+	if disp.mouseLeft:
+		if disp.leftButtonDownPosition():
+			if disp.leftButtonDownPosition()[1]<60:
+				print("SVN Region")
+				path = os.getcwd() + "/pieces" + svmclassName[6:]
+				partname = svmclassName[6:]
+			elif disp.leftButtonDownPosition()[1] < 110:
+				print("KNN Region")
+				path = os.getcwd() + "/pieces" + knnclassName[6:]
+				partname = knnclassName[6:]
+			elif disp.leftButtonDownPosition()[1] < 160:
+				print("Tree Region")
+				path = os.getcwd() + "/pieces" + treeclassName[6:]
+				partname = treeclassName[6:]
+			elif disp.leftButtonDownPosition()[1] < 210:
+				print("Bayes region")
+				path = os.getcwd() + "/pieces" + bayesclassName[6:]
+				partname = bayesclassName[6:]
+
+			os.chdir(path)
+			pathList = os.listdir(path)
+			n = 0
+			for string in pathList:
+				string = string.lstrip("img").rstrip(".png")
+				pathList[n] = int(string)
+				n +=1
+			n =max(pathList)
+			n +=1
+			imgName = "img" + str(n) + ".png"
+			imgraw.save(imgName)
+			print "Saved as: " + imgName
+			print("recorded image of "+partname)
+			stable=0
+			os.chdir("..")
+			os.chdir("..")
 	if disp.mouseRight:
 		break
 
@@ -95,6 +169,9 @@ while disp.isNotDone():
 
 # Change directory - os.chdir("/home/")     disp.mouseX < 640
 
-svm.save("SVMClass")
+svm.save("SVMClass.xml")
+tree.save("TreeClass.xml")
+bayes.save("BayesClass.xml")
+knn.save("KNNClass.xml")
 
 print os.getcwd()
