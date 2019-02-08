@@ -3,6 +3,23 @@ from SimpleCV import *
 from SimpleCV.Features import FeatureExtractorBase
 import time, os, orange, orngSVM, string, copy
 
+def saveImg(path, img):
+	os.chdir(path)
+	pathList = os.listdir(path)
+	n = 0
+	for string in pathList:
+		string = string.lstrip("img").rstrip(".png")
+		pathList[n] = int(string)
+		n +=1
+	n =max(pathList)
+	n +=1
+	imgName = "img" + str(n) + ".png"
+	img.save(imgName)
+	print "Saved as: " + imgName
+	print("recorded image at " + path+"/"+imgName)
+	os.chdir("..")
+	os.chdir("..")
+
 originalwd = os.getcwd()
 path = os.getcwd() + "/pieces"
 
@@ -72,7 +89,10 @@ bayesclassName = "Waiting...."
 path = ""
 
 while disp.isNotDone():
+	#Crop out the border from the image
 	img = cam.getImage().crop(200,200,200,200)
+
+	#Run the classifier every 4th loop, for speed purposes
 	if n > 4:
 		svmclassName = svm.classify(img)
 		knnclassName = knn.classify(img)
@@ -81,46 +101,37 @@ while disp.isNotDone():
 		n = 0
 	else:
 		n +=1
+
+	"""
+	Scale the image for display. Make a copy for processing purposes, then
+	proceed to perform additional image manipulation on the base image
+	"""
 	img=img.scale(400, 400)
 	imgraw = copy.deepcopy(img)
 
+	#Create a layer containing readouts of each classificatoin
 	newlayer = DrawingLayer(img.size())
-
 	newlayer.setFontSize(40)
 	newlayer.text(svmclassName[6:], (10, 10), color=Color.RED)
 	newlayer.text(knnclassName[6:], (10, 60), color=Color.BLUE)
 	newlayer.text(treeclassName[6:], (10, 110), color=Color.BLACK)
 	newlayer.text(bayesclassName[6:], (10, 160), color=Color.ORANGE)
-
 	img.addDrawingLayer(newlayer)
 
 	#Save additional images if their is four way, stable agreement on the class
-	if svmclassName == knnclassName and treeclassName == bayesclassName and treeclassName == knnclassName:
+	if (svmclassName == knnclassName and treeclassName == bayesclassName and
+			treeclassName == knnclassName):
 		stable +=1
 	else:
 		stable=0
 	if stable > 50:
-		path = os.getcwd() + "/pieces" + svmclassName[6:]
-		os.chdir(path)
-		pathList = os.listdir(path)
-		n = 0
-		for string in pathList:
-			string = string.lstrip("img").rstrip(".png")
-			pathList[n] = int(string)
-			n +=1
-		n =max(pathList)
-		n +=1
-		imgName = "img" + str(n) + ".png"
-		imgraw.save(imgName)
-		imgSave = img
-		print "Saved as: " + imgName
-		print("recorded image of "+svmclassName[6:])
+		saveImg(os.getcwd() + "/pieces" + svmclassName[6:], imgraw)
 		stable=0
-		os.chdir("..")
-		os.chdir("..")
-	#img.show()
+
+	#Refresh the display
 	disp.writeFrame(img.applyLayers())
 
+	#Save an image corresponding to the labeled classification the user clicks
 	partname=""
 	if disp.mouseLeft:
 		if disp.leftButtonDownPosition():
@@ -141,37 +152,17 @@ while disp.isNotDone():
 				path = os.getcwd() + "/pieces" + bayesclassName[6:]
 				partname = bayesclassName[6:]
 
-			os.chdir(path)
-			pathList = os.listdir(path)
-			n = 0
-			for string in pathList:
-				string = string.lstrip("img").rstrip(".png")
-				pathList[n] = int(string)
-				n +=1
-			n =max(pathList)
-			n +=1
-			imgName = "img" + str(n) + ".png"
-			imgraw.save(imgName)
-			print "Saved as: " + imgName
-			print("recorded image of "+partname)
+			saveImg(path, imgraw)
 			stable=0
-			os.chdir("..")
-			os.chdir("..")
+
+	#End program on right click
 	if disp.mouseRight:
 		break
 
-
-
-#print "TREE test ================================================================="
-#print tree.test(testPaths,classes,verbose=True)
-
-# Original directory - originalwd = os.getcwd()
-
-# Change directory - os.chdir("/home/")     disp.mouseX < 640
-
-svm.save("SVMClass.xml")
-tree.save("TreeClass.xml")
-bayes.save("BayesClass.xml")
-knn.save("KNNClass.xml")
+#Save trained model data (doesn't work right)
+svm.save("SVMClass.dat")
+tree.save("TreeClass.dat")
+bayes.save("BayesClass.dat")
+knn.save("KNNClass.dat")
 
 print os.getcwd()
